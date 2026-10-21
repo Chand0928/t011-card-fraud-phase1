@@ -6,7 +6,7 @@ We learn what legitimate card transactions look like and give unusual transactio
 
 ## Start here
 
-**[Open the study index](output/Study_Notebook.html)** for readable copies of all five notebooks. Each notebook explains what we do, why we do it, what the code means and how to read the output.
+**[Open the study index](index.html)** for readable copies of all five notebooks. Each notebook explains what we do, why we do it, what the code means and how to read the output.
 
 | Order | Notebook | Purpose |
 |---|---|---|
@@ -17,6 +17,12 @@ We learn what legitimate card transactions look like and give unusual transactio
 | 05 | [Thresholds and evaluation](notebooks/05_Evaluation_and_Thresholds.ipynb) | Validation cutoffs, mixed-test results, reference comparison and review tradeoffs |
 
 Notebook 01 is for reading. Run 02-05 in order. Each code notebook loads saved files from the previous stage; no shared Python session is needed. All analysis code remains visible inside the notebooks. [Notebook inputs and outputs](notebooks/README.md) explains the handoffs.
+
+## Share the reading website
+
+`index.html` is the website homepage. It links to all five HTML notebooks, with previous/next navigation, the report and the slides. The page works locally and with a GitHub Pages project URL.
+
+For deployment, use **Settings → Pages → Deploy from a branch → main → /(root) → Save**. See [the short deployment guide](docs/GITHUB_PAGES.md). No build command is needed. You can also upload the contents of the [prepared website ZIP](output/GitHub_Pages_Site.zip) into a separate Pages repository.
 
 ## Does this cover every Phase 1 area?
 

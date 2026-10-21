@@ -66,7 +66,9 @@ Numbers in chart filenames preserve the existing figure names; notebook numbers 
 | `output/LaTeX_Report_Source.zip` | A copy of the report source, IEEE class and its four figures, arranged for Overleaf |
 | `output/Phase1_Presentation_Complete.pptx` and `.pdf` | The same five notebooks/results; PPTX speaker notes identify sources. Editable deck and reading copy. |
 | `output/notebooks/*.html` | Reading exports of the five executed notebooks; supplied copies show the checked run |
-| `output/Study_Notebook.html` | An index linking those five reading exports |
+| `index.html` | GitHub Pages homepage linking the five reading exports, report and slides |
+| `output/Study_Notebook.html` | Compatibility link to the homepage |
+| `output/GitHub_Pages_Site.zip` | A deployable copy of the homepage, five reading pages and linked report/slides |
 | `STUDY_GUIDE.md`, `docs/CODE_GUIDE.md`, `docs/DEMO_AND_VIVA.md` | Explanations and practice questions for the notebook method |
 | `docs/LITERATURE_REVIEW.md` | Cited papers and official method/dataset references |
 | `docs/PHASE1_CHECKLIST.md` | Each of the nine course assessment areas mapped to evidence |

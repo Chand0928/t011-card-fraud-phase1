@@ -7473,8 +7473,29 @@ a.anchor-link {
     white-space: normal;
   }
 </style>
-<!-- End of mermaid configuration --></head>
+<!-- End of mermaid configuration --><style id="study-navigation-style">
+.study-navigation { position: sticky; top: 0; z-index: 1000; background: #fafbf9; border-bottom: 1px solid #d5dfe4; color: #173447; font: 15px/1.5 Arial, sans-serif; }
+.study-navigation .study-nav-inner { max-width: 1100px; margin: auto; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; }
+.study-navigation a { display: inline-block; padding: 6px 0; color: #24668d; text-decoration: underline; text-underline-offset: .2em; }
+.study-navigation a:hover { color: #153e59; }
+.study-navigation a:focus-visible { outline: 3px solid #24668d; outline-offset: 4px; }
+.study-navigation .study-nav-steps { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 22px; }
+.study-navigation .study-position { color: #4e6472; font-variant-numeric: tabular-nums; }
+.study-bottom-navigation { position: static; border-top: 1px solid #d5dfe4; border-bottom: 0; margin-top: 36px; }
+body { margin: 0; }
+body img { max-width: 100%; height: auto; }
+@media (max-width: 620px) {
+  .study-navigation .study-nav-inner { padding: 10px 16px; gap: 5px 20px; }
+  .study-navigation .study-nav-steps { gap: 10px 18px; }
+  .jp-Notebook { padding: 12px 8px !important; }
+  .jp-InputPrompt, .jp-OutputPrompt { min-width: 34px !important; padding-left: 0 !important; }
+  .jp-RenderedHTMLCommon { overflow-wrap: anywhere; }
+}
+@media print { .study-navigation { display: none; } }
+</style>
+</head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
+<!-- study-navigation-start --><nav class="study-navigation" aria-label="Notebook navigation"><div class="study-nav-inner"><a href="../../index.html">All notebooks</a><div class="study-nav-steps"><span class="study-position">Notebook 03 of 05</span><a href="02_Data_Quality_and_EDA.html" rel="prev">Previous notebook</a><a href="04_GMM_Training.html" rel="next">Next notebook</a></div></div></nav><!-- study-navigation-end -->
 <main>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8f1d70aa">
 <div class="jp-Cell-inputWrapper" tabindex="0">
@@ -7846,5 +7867,6 @@ a.anchor-link {
 </div>
 </div>
 </main>
+<!-- study-navigation-start --><nav class="study-navigation study-bottom-navigation" aria-label="Continue reading"><div class="study-nav-inner"><a href="../../index.html">All notebooks</a><div class="study-nav-steps"><span class="study-position">Notebook 03 of 05</span><a href="02_Data_Quality_and_EDA.html" rel="prev">Previous notebook</a><a href="04_GMM_Training.html" rel="next">Next notebook</a></div></div></nav><!-- study-navigation-end -->
 </body>
 </html>
