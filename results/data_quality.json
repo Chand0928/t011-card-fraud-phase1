@@ -1,0 +1,12 @@
+{
+  "raw_rows": 284807,
+  "raw_frauds": 492,
+  "columns": 31,
+  "missing_cells": 0,
+  "infinite_cells": 0,
+  "exact_duplicate_rows": 1081,
+  "sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89",
+  "clean_rows": 283726,
+  "clean_frauds": 473,
+  "clean_fraud_rate": 0.001667101358352777
+}

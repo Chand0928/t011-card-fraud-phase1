@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+.build/
+.codex-finalizer/
+.chart-data-*/
+node_modules/
+data/raw/*.csv
+models/*.joblib
+*.aux
+*.log
+*.out
+*.toc
+output/*.zip
