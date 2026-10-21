@@ -1,0 +1,12 @@
+{
+  "python": "3.12.4",
+  "numpy": "1.26.4",
+  "pandas": "2.2.2",
+  "sklearn": "1.4.2",
+  "matplotlib": "3.8.4",
+  "seed": 42,
+  "raw_sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89",
+  "test_rows": 56746,
+  "test_frauds": 74,
+  "prediction_rule": "score > threshold"
+}

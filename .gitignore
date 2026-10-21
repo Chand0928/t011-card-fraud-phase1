@@ -13,3 +13,5 @@ models/*.joblib
 *.out
 *.toc
 output/*.zip
+.cache/
+data/processed/

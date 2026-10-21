@@ -1,6 +1,8 @@
 # Understand the project, one part at a time
 
-Read the notebook first. This guide is the shorter revision sheet. You do not need to memorize a long speech: explain the question that each step answers.
+Read the five notebooks in order first. This guide is the shorter revision sheet. You do not need to memorize a long speech: explain the question that each step answers.
+
+The project now has five notebooks in `notebooks/`: 01 project/literature, 02 quality/EDA, 03 features, 04 GMM training and 05 evaluation. Read them in order. The code notebooks exchange saved files, so each can start with a fresh Python session. The root `README.md` links all five, and `docs/PHASE1_CHECKLIST.md` maps the nine assessment areas.
 
 ## The Python notation used in the notebook
 
@@ -55,11 +57,14 @@ EDA means looking at counts and charts to understand the training data. Explain 
 | Amount before/after log | A few large amounts stretch the original scale. The log compresses that range. |
 | Transactions by hour | Transaction volume changes over the recording. The short recording cannot prove a permanent daily pattern. |
 | V1/V2 dots | Some fraud overlaps legitimate activity. The display samples legitimate points for readability, but fitting uses all legitimate training rows. |
+| Feature correlation | Relationships among legitimate training V features are descriptive; low global correlation does not establish independence inside each Gaussian component. |
 | AIC/BIC | Eight components give the smallest BIC among the four choices tested. |
 | Confusion matrix | At the default cutoff, 37 frauds are found and 37 missed. There are 172 false alerts. |
 | Policy tradeoff | More permissive cutoffs find more fraud here but create more legitimate alerts. |
 | PR curve | The balance between precision and recall changes as the cutoff changes. |
 | Top 100 | Among exactly 100 reviewed transactions, 29 are fraud and 71 are legitimate. |
+| Review capacities | Precision can rise or fall as the queue grows because the next block of ranked rows can contain more or fewer frauds. |
+| Score overlap | Some legitimate and fraud transactions get similar scores, explaining false alerts and missed fraud. The chart's compressed scale is display only. |
 
 ## 5. Why transform and scale the inputs?
 
@@ -79,7 +84,7 @@ A Gaussian is a bell-shaped distribution with a center and spread. A mixture com
 
 ![Teaching picture of one Gaussian and a two-component mixture](figures/gmm_teaching.png)
 
-The picture uses invented numbers to explain the idea. On the right, the solid curve is the sum of the two weighted curves. Our actual model uses 29 inputs and eight components.
+The picture uses invented numbers. One curve has a single center; the other combines two weighted Gaussian curves and has two centers. Notebook 04 contains the code that draws it. Our actual model uses 29 inputs and eight components.
 
 For a transaction x:
 
@@ -106,6 +111,8 @@ More components can fit data more closely, but also introduce more adjustable nu
 N is the number of fitted training rows. q is the number of adjustable model parameters. L is the total training log likelihood: add the log densities of the fitted training examples. Higher L helps the fit; the q term penalizes complexity.
 
 **Lower is better. We choose the smallest training BIC.** We try K=1,2,4,8, and eight wins. Because eight is the largest tested value and the scores are still falling, we cannot claim it is the best among all possible values. BIC evaluates legitimate density fit, not fraud recall.
+
+The K=1 candidate also provides an evaluation reference. It uses the same legitimate training rows, inputs, scaler and test set. Its PR AUC is 0.0527, compared with 0.1496 for the selected mixture. This shows a ranking improvement in this run, not a promise for every future dataset.
 
 ## 8. How do scores and cutoffs work?
 

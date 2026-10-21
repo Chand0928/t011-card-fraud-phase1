@@ -1,0 +1,12 @@
+{
+  "raw_rows": 284807,
+  "raw_frauds": 492,
+  "duplicates_removed": 1081,
+  "missing_cells": 0,
+  "infinite_cells": 0,
+  "clean_rows": 283726,
+  "clean_frauds": 473,
+  "sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89",
+  "training_end_exclusive": 120393.0,
+  "validation_end_exclusive": 145234.0
+}

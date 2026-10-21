@@ -12,7 +12,7 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-We build a simple card-fraud review system using a Gaussian Mixture Model (GMM). The model learns patterns from earlier legitimate transactions and assigns larger anomaly scores to less typical later transactions. We compare four component counts using training AIC and BIC, choose alert cutoffs on validation data, and evaluate on a later mixed test period. The selected eight-component GMM achieves trapezoidal precision-recall area 0.1496. Our default validation policy finds 37 of 74 test frauds and falsely alerts on 172 legitimate transactions. Reviewing exactly the top 100 scores finds 29 frauds. This report covers Phase 1 machine learning only.
+We build a simple card-fraud review system using a Gaussian Mixture Model (GMM). The model learns patterns from earlier legitimate transactions and assigns larger anomaly scores to less typical later transactions. We compare four component counts using training AIC and BIC, choose alert cutoffs on validation data, and evaluate on a later mixed test period. The selected eight-component GMM achieves trapezoidal precision-recall area 0.1496. Our default validation policy finds 37 of 74 test frauds and falsely alerts on 172 legitimate transactions. Reviewing exactly the top 100 scores finds 29 frauds. The selected GMM improves test PR area over a same-data one-Gaussian reference, whose area is 0.0527. Five ordered notebooks preserve preparation, model settings and validation history. This report covers Phase 1 machine learning only.
 \end{abstract}
 \begin{IEEEkeywords}fraud triage, Gaussian mixture, anomaly detection, precision-recall\end{IEEEkeywords}
 
@@ -24,12 +24,14 @@ Dempster, Laird and Rubin~\cite{em} explain expectation-maximization (EM), which
 
 The scikit-learn documentation~\cite{sk} describes GMM settings and information-criterion selection. We use its diagonal-covariance GMM and a small K grid. The recommended data comes from ULB/Worldline~\cite{data}. TensorFlow documents the public CSV mirror~\cite{tf}. These sources explain our design; our result numbers come from our own run.
 
+The limitation connecting these readings is that a well-fitted legitimate density need not separate fraud. EM supplies a fitting method, information criteria select density complexity, and PR measures check whether that density ranking actually supports review. We test this link using later mixed data and fixed validation policies. This is a baseline study, not a new algorithm. The assignment's suggested autoencoder reading by Sakurada and Yairi (2014) is reserved for the later DL phase; we claim no autoencoder results.
+
 \section{Data Quality and Exploration}
 The original CSV has 284,807 transactions, 31 columns and 492 frauds. Time records elapsed seconds. V1--V28 are anonymous numerical inputs transformed by the provider. Amount is in EUR. Class gives the correct answer: zero for legitimate and one for fraud. We do not know the business meanings of the V columns or how the provider fitted its original PCA.
 
-We find no missing or infinite cells. We remove 1,081 exact repeated rows and keep the first occurrence. Nineteen removed rows carry fraud labels, leaving 283,726 transactions and 473 frauds. There is no transaction ID, so duplicate removal is an explicit assumption.
+We verify expected columns, numeric finite values, binary labels and nonnegative Amount/Time. We find no missing or infinite cells. We remove 1,081 exact repeated rows and keep the first occurrence. Nineteen removed rows carry fraud labels, leaving 283,726 transactions and 473 frauds. There is no transaction ID, so duplicate removal is an explicit assumption.
 
-We split earlier and later transactions into approximately 60\% training, 20\% validation and 20\% test. Equal timestamps stay together. Table~\ref{tab:split} shows the counts. The scaler and GMM use only the 169,893 legitimate training rows. Validation and test retain both classes. Test labels do not choose inputs, K or cutoffs.
+We split earlier and later transactions into approximately 60\% training, 20\% validation and 20\% test. Equal timestamps stay together. Table~\ref{tab:split} shows the counts. The boundaries are 120,393 and 145,234 elapsed seconds. The scaler and GMM use only the 169,893 legitimate training rows. Validation and test retain both classes. Test labels do not choose inputs, K or cutoffs.
 \begin{table}[!t]\centering\caption{Earlier training and later evaluation periods}\label{tab:split}
 \begin{tabular}{lrrr}\hline
 Set & Transactions & Legitimate & Fraud\\\hline
@@ -38,7 +40,7 @@ Validation & 56,745 & 56,688 & 57\\
 Test & 56,746 & 56,672 & 74\\
 \hline\end{tabular}\end{table}
 
-The notebook includes five initial charts: split sizes, training class counts, amount distributions, hourly transaction counts, and V1/V2 overlap. Fraud is rare, amounts have a long right tail, and the two classes overlap. A policy predicting all test rows legitimate would have about 99.87\% accuracy but catch no fraud. This is why we do not use accuracy as the headline result.
+Notebook 02 includes six EDA charts: split sizes, training class counts, amount distributions, hourly transaction counts, V1/V2 overlap, and legitimate-feature correlation. Fraud is rare, amounts have a long right tail, and the two classes overlap. A policy predicting all test rows legitimate would have about 99.87\% accuracy but catch no fraud. This is why we do not use accuracy as the headline result. Correlation is descriptive: low global correlation does not prove independence inside every mixture component. Plot sampling affects only the V1/V2 picture, not model fitting.
 
 \chart{03_amount.png}{The log transform compresses the large range of Amount. Both panels use training rows only.}{fig:amount}
 
@@ -63,12 +65,34 @@ EM repeats two steps. The E-step estimates each transaction's membership in each
 
 Labels select known legitimate training rows, but GMM fitting receives only inputs and no target labels. Both facts matter when describing the training setup.
 
+To connect the words to equations, let $i$ identify a transaction, $k$ a component, and $j$ an input. The E-step computes a soft membership, or responsibility:
+\begin{equation}
+r_{ik}=\frac{\pi_k\mathcal{N}(x_i\mid\mu_k,\Sigma_k)}{\sum_{\ell=1}^{K}\pi_\ell\mathcal{N}(x_i\mid\mu_\ell,\Sigma_\ell)}.
+\end{equation}
+For one transaction, these memberships sum to one. A transaction can partly influence more than one component. Define $N_k=\sum_i r_{ik}$. The M-step then uses weighted averages:
+\begin{align}
+\pi_k&=N_k/N, & \mu_k&=\frac{1}{N_k}\sum_i r_{ik}x_i,\\
+\sigma_{kj}^2&=\frac{1}{N_k}\sum_i r_{ik}(x_{ij}-\mu_{kj})^2+10^{-6}.
+\end{align}
+The last line learns each input's separate variance for diagonal covariance. The added small value avoids a variance collapsing to zero. These formulas explain what the library fits; the notebook uses the library rather than a second hand-written EM implementation.
+
+
 \subsection{Choose the Component Count}
 We try K=1,2,4,8 on the same legitimate rows. AIC and BIC balance a better fit against extra adjustable parameters:
 \begin{equation}
 \mathrm{AIC}=2q-2L,\qquad \mathrm{BIC}=q\log N-2L.
 \end{equation}
-N is the number of fitted rows, q is the number of free parameters, and L is total training log likelihood. Lower values are preferred. We select minimum training BIC and report AIC alongside it. Eight wins within this grid (Fig.~\ref{fig:bic}). It is the largest K tried, so we do not claim it is best among every possible value. Better legitimate density fit does not guarantee better fraud recall.
+N is the number of fitted rows, q is the number of free parameters, and L is total training log likelihood. Lower values are preferred. We select minimum training BIC and report AIC alongside it. Eight wins within this grid (Fig.~\ref{fig:bic}). It is the largest K tried, so we do not claim it is best among every possible value. Better legitimate density fit does not guarantee better fraud recall. For diagonal covariance, the number of free parameters is $q=K(2d+1)-1$, where $d=29$ inputs. The selected K=8 model therefore has 471 free parameters. More components require more learned numbers, which explains the criterion's complexity penalty.
+
+
+\begin{table}[!t]\centering\caption{Training model selection; every candidate converged}\label{tab:selection}
+\begin{tabular}{rrrr}\hline
+K & AIC / $10^6$ & BIC / $10^6$ & Iterations\\\hline
+1 & 13.9820 & 13.9826 & 2\\
+2 & 11.9348 & 11.9360 & 9\\
+4 & 10.8944 & 10.8968 & 32\\
+8 & 10.1402 & 10.1449 & 35\\
+\hline\end{tabular}\end{table}
 
 \chart{06_aic_bic.png}{Eight components give the smallest BIC among our four choices. The curves remain decreasing at the grid boundary.}{fig:bic}
 
@@ -88,21 +112,41 @@ The workload is 209 alerts. We find half the fraud, miss half, and send 172 legi
 
 Table~\ref{tab:policy} applies the three validation cutoffs without retuning on test outcomes. A more permissive policy finds more fraud here, but also creates more false alerts.
 \begin{table}[!t]\centering\caption{Test results at fixed validation budgets}\label{tab:policy}
-\setlength{\tabcolsep}{5pt}\begin{tabular}{rrrrr}\hline
-Budget (\%) & Fraud found & False alerts & Recall (\%) & Precision (\%)\\\hline
-0.1 & 6 & 39 & 8.11 & 13.33\\
-0.5 & 37 & 172 & 50.00 & 17.70\\
-1.0 & 52 & 381 & 70.27 & 12.01\\
+\setlength{\tabcolsep}{4pt}\begin{tabular}{rrrrrr}\hline
+Val. budget & TP & FP & Recall & Precision & Test FPR\\
+(\%) & & & (\%) & (\%) & (\%)\\\hline
+0.1 & 6 & 39 & 8.11 & 13.33 & 0.0688\\
+0.5 & 37 & 172 & 50.00 & 17.70 & 0.3035\\
+1.0 & 52 & 381 & 70.27 & 12.01 & 0.6723\\
 \hline\end{tabular}\end{table}
 
 The PR curve shows precision against recall across score cutoffs (Fig.~\ref{fig:pr}). Trapezoidal PR AUC connects neighboring points and adds their areas. Its value is 0.1496 on this test period. It is not accuracy or precision at the default cutoff. The test fraud rate is 0.1304\%.
 
+The K=1 candidate provides a simple reference: it uses the same legitimate training rows, 29 inputs, scaler and test period, with the same score definition. Its test PR AUC is 0.0527, compared with 0.1496 for the selected GMM. We compare ranking under one area definition, not different evaluation protocols. The selected mixture ranks fraud better in this run; this is not a universal guarantee that adding components improves detection.
+
+\chart{13_score_overlap.png}{Final score distributions overlap. The displayed horizontal scale compresses scores only for readability; ranking and cutoff scores remain unchanged.}{fig:overlap}
+
+Figure~\ref{fig:overlap} explains why a density cutoff can produce both false alerts and missed fraud. Each class has its own density normalization. Negative scores, if any, map to zero only in this displayed transform.
+
 \chart{09_precision_recall.png}{Final test precision-recall curve. The dashed line marks test fraud prevalence.}{fig:pr}
 
-For a fixed batch capacity, sort by decreasing anomaly score and review exactly 100 rows. We find 29 frauds and 71 legitimate transactions, so precision@100 is 29\%. Tied scores retain chronological order. This is a capacity for the whole test batch, not a daily workload claim.
+For a fixed batch capacity, sort by decreasing anomaly score and review exactly 100 rows. We find 29 frauds and 71 legitimate transactions, so precision@100 is 29\%. Tied scores retain chronological order. This is a capacity for the whole test batch, not a daily workload claim. Table~\ref{tab:capacity} gives supporting capacities. Precision need not decrease at every larger capacity because the next ranked block may contain more or fewer frauds.
+\begin{table}[!t]\centering\caption{Fixed-capacity review on the same test batch}\label{tab:capacity}
+\begin{tabular}{rrrr}\hline
+Reviews & Fraud found & Precision (\%) & Recall (\%)\\\hline
+50 & 8 & 16.0 & 10.81\\
+100 & 29 & 29.0 & 39.19\\
+200 & 37 & 18.5 & 50.00\\
+500 & 53 & 10.6 & 71.62\\
+\hline\end{tabular}\end{table}
 
+\newpage
 \section{Reproducibility, Limits and Conclusion}
-All analysis code appears directly in \texttt{Phase1.ipynb}. The notebook includes its actual outputs, ten explained charts, checks beside the relevant code, and a fixed seed. The requirements file specifies the main package versions. Result tables support this report and the presentation. Each team member must review and understand the AI-assisted work; individual contributions are not inferred from team membership.
+Five ordered notebooks contain the visible analysis and simple explanations: (01) project/literature, (02) quality/EDA, (03) feature engineering, (04) GMM training and (05) evaluation. They exchange saved local files rather than relying on a shared Python session. Read 01, then open 02--05 in order, restarting each kernel and using Run All. All analysis and saving operations appear directly in their cells. FILE\_MAP.md links each result and chart to its producing notebook; CODE\_GUIDE.md explains the standard functions. The supplied HTML copies show the verified run.
+
+The inline checks cover schema, finite values, labels, time separation, feature exclusion, scaler fitting rows, convergence, empirical validation budgets and consistency of final confusion counts. The run records the input checksum, feature list, model settings, thresholds, software versions and test scores. Python 3.12.4, NumPy 1.26.4, pandas 2.2.2 and scikit-learn 1.4.2 produced the run. Raw data, intermediate arrays and binary model files stay outside Git and are recreated by the notebooks.
+
+The repository provides the literature review, requirement-to-evidence checklist, study guide, demonstration/viva guide, presentation and editable LaTeX source. AI assistance prepared the materials. Each member must review and understand them and record actual contributions. An allocated team membership or generated commit is not evidence of a student's completed contribution or understanding.
 
 The test period contains only 74 frauds. One fraud decision changes recall by about 1.35 percentage points. The short historical dataset, anonymous inputs, unaudited provider PCA, duplicate-removal assumption, diagonal covariance and small K grid limit the conclusion. Future patterns can change, and rarity is not the same as fraud.
 

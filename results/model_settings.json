@@ -1,0 +1,18 @@
+{
+  "selected_K": 8,
+  "candidates": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "selection_rule": "minimum training BIC among converged candidates",
+  "covariance_type": "diag",
+  "n_init": 3,
+  "max_iter": 200,
+  "reg_covar": 1e-06,
+  "tol": 0.001,
+  "random_state": 42,
+  "training_rows": 169893,
+  "inputs": 29
+}
