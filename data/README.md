@@ -1,22 +1,11 @@
-# Dataset provenance
+# Dataset
 
-Original: ULB Machine Learning Group / Worldline, [Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud).
+Original: [ULB/Worldline Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud).
 
-Public mirror: `https://storage.googleapis.com/download.tensorflow.org/data/creditcard.csv`, documented in the [TensorFlow imbalanced-data tutorial](https://www.tensorflow.org/tutorials/structured_data/imbalanced_data). Only the data source is used from that tutorial. This project implements a GMM, not its neural classifier.
+The [TensorFlow tutorial](https://www.tensorflow.org/tutorials/structured_data/imbalanced_data) documents the public CSV mirror used by the notebook. This project uses its data source, not its neural-network method.
 
-Download with `python scripts/download_data.py`. The expected original dataset has 284,807 rows, 31 columns and 492 fraud labels. `results/data_quality.json` records the checksum and measured counts for the exact file used. A changed checksum requires inspecting the new file before comparing results.
+The notebook loads `data/raw/creditcard.csv`, downloading it if missing. The CSV is excluded from Git. Expected original size: 284,807 rows, 31 columns and 492 frauds.
 
-| Column | Meaning | Use |
-|---|---|---|
-| Time | Seconds since the first transaction in the file | Chronological split and time EDA only |
-| V1-V28 | Anonymized principal-component features supplied by the dataset provider | 28 model inputs |
-| Amount | Transaction amount, EUR | Transform to `log(1 + Amount)` |
-| Class | 0 legitimate, 1 fraud | Filter legitimate training rows and evaluate results |
+The exact local CSV used has SHA256 `76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89`. Class is 0 for legitimate and 1 for fraud. Amount is in EUR; Time is elapsed seconds; V1-V28 are anonymous provider-supplied PCA features.
 
-The model receives 29 features. Class is never an input. The provider already produced V1-V28, so we cannot audit how its original PCA was fitted. We fit our own scaler only on legitimate training rows.
-
-Exact duplicate handling: sort by Time with stable ties and keep the first occurrence of each exact full row. There is no transaction ID, so this is an assumption about repeated records. We document raw and cleaned class counts and preserve all other values. We do not remove large transactions or unusual feature values merely because they look anomalous.
-
-Data quality checks inspect the file mechanically for schema, finite numeric values, binary labels and nonnegative Time/Amount. Class-aware feature EDA uses the training split only. Test labels appear in final metrics and final diagnostic plots.
-
-Raw data stays local and is excluded from Git. Attribute the source and review its current dataset terms before redistribution. The repository includes the download script rather than a second public copy of the dataset.
+We remove exact repeated rows under the documented assumption explained in notebook Step 3. There is no transaction ID that proves identical records are the same purchase. Keep source attribution and review dataset terms before redistributing the raw file.

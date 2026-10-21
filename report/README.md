@@ -1,16 +1,14 @@
-# Rebuild the IEEE report
+# Edit or rebuild the report
 
-`phase1_report.tex` is the editable LaTeX source. `IEEEtran.cls` is the official class downloaded from CTAN, kept with its original license header. It is not a custom imitation of IEEE formatting.
+`Phase1_Report.tex` is the report source. `IEEEtran.cls` is the official IEEE LaTeX class, with its original license header preserved.
 
-Run these commands **from the project root** after producing the analysis results:
+If you only need to read the report, open `../output/Phase1_Report.pdf`.
+
+To rebuild it, run these commands from this `report` folder with a LaTeX installation:
 
 ```bash
-python scripts/build_report.py
-cd report
-pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../output phase1_report.tex
-pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../output phase1_report.tex
+pdflatex -output-directory=../output Phase1_Report.tex
+pdflatex -output-directory=../output Phase1_Report.tex
 ```
 
-The second compile resolves citations and figure references. Figures use the actual result PDFs in `results/figures/`. To use Overleaf, upload this project with the report source, class and figures, and preserve the folder structure. Set the main document to `report/phase1_report.tex` and adjust the relative graphics path if the platform changes the compilation directory.
-
-The report is five pages. Its methods explain the experiment, while the notebook and study guide provide the step-by-step learning material.
+The second run resolves citations and figure references. Keep the adjacent `figures` folder when compiling. All numbers and charts come from the notebook. If you change the experiment, update the report and slides to match the new run.
