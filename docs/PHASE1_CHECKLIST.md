@@ -12,7 +12,7 @@ The PDF lists nine Phase 1 areas. It gives no numerical grading weights, minimum
 | Theoretical rigor | Notebook 04, root study guide, report GMM/EM equations | Mixture weights, memberships, EM updates, covariance, likelihood, AIC/BIC, negative log density |
 | Model application | Notebooks 04-05, convergence records, model settings, ranking and policy tables | The fixed K rule, score direction, validation cutoffs, final test results and one-Gaussian reference |
 | GitHub repository and code quality | Ordered notebooks, root README, pinned libraries, inline checks, `FILE_MAP.md`, `docs/CODE_GUIDE.md` | Reproduce the run, explain checks, keep code/data separation and avoid leakage |
-| Project presentation | `output/Phase1_Presentation_Complete.pptx`, PDF copy and speaker notes | Present the same methods and results that the notebooks measured |
+| Project presentation | `Phase1_Presentation_Final.pptx` (the final deck supplied by Mayank) | Present the same methods and results that the notebooks measured |
 | Viva voce | `STUDY_GUIDE.md`, `docs/DEMO_AND_VIVA.md`, notebook checkpoints | Each member explains the full project, metrics, assumptions and limitations individually |
 | LaTeX/IEEE report | `report/Phase1_Report.tex`, official `IEEEtran.cls`, compiled report PDF | Follow the written methods, tables, equations, citations and limitations |
 
@@ -41,4 +41,4 @@ The project uses one explicit PR-area definition, trapezoidal PR AUC. Average pr
 
 ## Prepared artifacts and remaining team actions
 
-All nine areas have prepared evidence. The team still needs to review the materials, practice the live demonstration, record actual contributions, ensure faculty access to the private repository and follow the actual submission instructions. An executed notebook cannot establish a person's understanding or create contribution evidence for them. No faculty submission or invitation is claimed.
+All nine areas have prepared evidence. The team still needs to review the materials, practice the live demonstration, confirm the recorded responsibilities, ensure faculty access to the repository and follow `docs/SUBMISSION.md`. An executed notebook cannot establish a person's understanding or create contribution evidence for them. No faculty submission or invitation is claimed.

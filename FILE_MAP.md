@@ -63,15 +63,25 @@ Numbers in chart filenames preserve the existing figure names; notebook numbers 
 | File/folder | Where its content comes from |
 |---|---|
 | `report/Phase1_Report.tex` → `output/Phase1_Report.pdf` | Literature from 01; methods from 02–04; measured results from 05. Compile the LaTeX to create the PDF. |
-| `output/LaTeX_Report_Source.zip` | A copy of the report source, IEEE class and its four figures, arranged for Overleaf |
-| `output/Phase1_Presentation_Complete.pptx` and `.pdf` | The same five notebooks/results; PPTX speaker notes identify sources. Editable deck and reading copy. |
+| `output/T011_Report_LaTeX.zip` | A copy of the report source, IEEE class and its four figures, arranged for Overleaf |
+| `Phase1_Presentation_Final.pptx` | Final presentation uploaded by Mayank; preserved unchanged. |
 | `output/notebooks/*.html` | Reading exports of the five executed notebooks; supplied copies show the checked run |
 | `index.html` | GitHub Pages homepage linking the five reading exports, report and slides |
-| `output/Study_Notebook.html` | Compatibility link to the homepage |
-| `output/GitHub_Pages_Site.zip` | A deployable copy of the homepage, five reading pages and linked report/slides |
+| `output/T011_Notebook_Site.zip` | A deployable copy of the homepage, five reading pages and linked report/slides |
 | `STUDY_GUIDE.md`, `docs/CODE_GUIDE.md`, `docs/DEMO_AND_VIVA.md` | Explanations and practice questions for the notebook method |
 | `docs/LITERATURE_REVIEW.md` | Cited papers and official method/dataset references |
 | `docs/PHASE1_CHECKLIST.md` | Each of the nine course assessment areas mapped to evidence |
-| `docs/TEAM_CONTRIBUTIONS.md` | Blank actual-contribution record; students fill it after doing their work |
+| `docs/TEAM_CONTRIBUTIONS.md` | Final responsibilities of all five members, shared report authorship and existing commit evidence |
 
 The report and slides are written deliverables prepared from the results. Running notebooks saves the analysis files; it does not automatically rewrite the report or presentation. If an experiment changes, update these documents to match it.
+
+## Responsibility and final submission files
+
+Notebook leads: **02 Keshav → 03 Vaibhav → 04 Mayank → 05 H Maheshwari (Hardik)**. Mitul Bhatia leads and coordinates the whole project; notebook 01 is shared background.
+
+- `Phase1_Presentation_Final.pptx`: Mayank's final presentation; README/presentation responsibility is shared with Keshav.
+- `report/Phase1_Report.tex` → `output/Phase1_Report.pdf`: IEEE LaTeX source and its compiled submission PDF; the report is jointly written by all five members.
+- `docs/TEAM_CONTRIBUTIONS.md`: all five members' responsibilities and existing commit evidence.
+- `docs/SUBMISSION.md`: exact Google Form values and upload paths.
+
+Local ZIP bundles are convenience downloads, excluded from Git to avoid duplicate and outdated copies. The notebooks, measured results, charts, LaTeX source, final PDF and final PPTX remain in Git.

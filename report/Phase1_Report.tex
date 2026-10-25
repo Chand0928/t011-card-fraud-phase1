@@ -1,5 +1,5 @@
 \documentclass[conference]{IEEEtran}
-\usepackage{amsmath,graphicx,url}
+\usepackage{amsmath,graphicx,url,array}
 \renewcommand{\ttdefault}{cmtt}
 \usepackage[hidelinks]{hyperref}
 \hypersetup{pdftitle={Card Fraud Triage - Phase 1},pdfauthor={Team T011}}
@@ -146,11 +146,27 @@ Five ordered notebooks contain the visible analysis and simple explanations: (01
 
 The inline checks cover schema, finite values, labels, time separation, feature exclusion, scaler fitting rows, convergence, empirical validation budgets and consistency of final confusion counts. The run records the input checksum, feature list, model settings, thresholds, software versions and test scores. Python 3.12.4, NumPy 1.26.4, pandas 2.2.2 and scikit-learn 1.4.2 produced the run. Raw data, intermediate arrays and binary model files stay outside Git and are recreated by the notebooks.
 
-The repository provides the literature review, requirement-to-evidence checklist, study guide, demonstration/viva guide, presentation and editable LaTeX source. AI assistance prepared the materials. Each member must review and understand them and record actual contributions. An allocated team membership or generated commit is not evidence of a student's completed contribution or understanding.
+The repository provides the literature review, requirement-to-evidence checklist, study guide, demonstration/viva guide, final presentation and editable LaTeX source. AI assistance supported preparation and editing; the team remains responsible for reviewing and understanding the work.
 
 The test period contains only 74 frauds. One fraud decision changes recall by about 1.35 percentage points. The short historical dataset, anonymous inputs, unaudited provider PCA, duplicate-removal assumption, diagonal covariance and small K grid limit the conclusion. Future patterns can change, and rarity is not the same as fraud.
 
 The GMM provides a clear Phase 1 review baseline with visible mistakes and review tradeoffs. We do not claim production readiness. Phase 2 may compare an autoencoder using the same legitimate training rows and evaluation protocol; no autoencoder or hybrid results are included here.
+
+\section{Team Contributions}
+All five members contributed to the project and jointly wrote this report. Each member contributed the methods, results and explanations for their work. The following division identifies the main project responsibilities. H Maheshwari is referred to as Hardik by the team. Notebook 01 provides the shared project and literature background; the leads below are responsible for their respective stages, while every member prepares to explain the full pipeline.
+
+\begin{table}[!t]\centering\caption{Team T011 contribution responsibilities}\label{tab:team}
+\small\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.28\columnwidth}>{\raggedright\arraybackslash}p{0.65\columnwidth}}\hline
+Member & Responsibility\\\hline
+H Maheshwari (Hardik)\newline 2401010174 & Notebook 05: validation thresholds and evaluation with PR AUC, precision, recall and review capacity. \\
+Vaibhav\newline 2401010486 & Notebook 03: feature engineering and training-only scaling. \\
+Mayank\newline 2401010267 & Notebook 04: GMM training, EM, AIC/BIC and component selection. README and presentation with Keshav.\\
+Keshav\newline 2401010222 & Notebook 02: data quality, chronological splitting and EDA. README and presentation with Mayank.\\
+Mitul Bhatia\newline 2401010279 & Overall project lead: planning, managing responsibilities, coordinating all stages and overseeing the project.\\
+\hline\end{tabular}\end{table}
+
+The report is a joint deliverable of H Maheshwari (Hardik), Vaibhav, Mayank, Keshav and Mitul Bhatia. Table~\ref{tab:team} identifies their main responsibilities; shared report authorship covers the complete methods, results and discussion.
 
 \newpage
 \begin{thebibliography}{9}

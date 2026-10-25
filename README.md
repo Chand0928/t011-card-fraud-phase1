@@ -45,7 +45,7 @@ The interesting part is that the model **never sees a single fraud during traini
 <tr>
 <td align="center" width="25%"><h2>37 / 74</h2>frauds caught<br/>at the default cutoff</td>
 <td align="center" width="25%"><h2>29</h2>frauds in the<br/>top 100 alerts</td>
-<td align="center" width="25%"><h2>0.30%</h2>of legitimate users<br/>wrongly flagged</td>
+<td align="center" width="25%"><h2>0.30%</h2>of legitimate transactions<br/>wrongly flagged</td>
 <td align="center" width="25%"><h2>~3×</h2>better ranking than<br/>a single Gaussian</td>
 </tr>
 </table>
@@ -186,7 +186,7 @@ Only the **legitimate** rows from training (169,893 of them) are used to fit the
 
 ### 3. Feature engineering
 
-Transaction amounts are heavily skewed: most are small and a few are huge. Taking `log(1 + Amount)` spreads them out into a much friendlier shape.
+Transaction amounts are heavily skewed: most are small and a few are huge. Taking `log(1 + Amount)` compresses the large values and makes the range easier to model.
 
 <p align="center">
   <img src="figures/03_amount.png" width="760" alt="Amount before and after log transform"/>
@@ -254,7 +254,7 @@ Another way to look at it: *"if my team can review N cases, how many frauds do t
 <p align="center">
   <img src="figures/09_precision_recall.png" width="560" alt="Precision-recall curve"/>
 </p>
-<p align="center"><i>We use the precision-recall curve instead of ROC because, with this much imbalance, ROC looks good even for weak models.</i></p>
+<p align="center"><i>We emphasize precision-recall because it shows how many alerts are actual fraud. With rare fraud, a small false-positive rate can still produce many false alerts.</i></p>
 
 ---
 
@@ -263,9 +263,9 @@ Another way to look at it: *"if my team can review N cases, how many frauds do t
 | | Supervised classifier | Our GMM approach |
 |---|---|---|
 | Needs fraud labels to train | Yes, lots of them | **No**, only normal data |
-| Fraud examples available | Only 342 in training | Doesn't matter |
-| New fraud patterns | Can miss them | Flags anything unusual |
-| Easy to explain | Often a black box | "This doesn't look like normal spending" |
+| Fraud examples available | Only 342 in training | Fits the 169,893 known legitimate training rows |
+| New fraud patterns | Can miss unfamiliar patterns | May flag low-density patterns; can miss normal-looking fraud |
+| Explanation | Depends on the classifier | "This has low density under the legitimate model" |
 
 ## Limitations
 
@@ -305,7 +305,8 @@ t011-card-fraud-phase1/
 ├── results/              # Saved metrics and settings (CSV / JSON)
 ├── figures/              # Every chart in this README
 ├── report/               # IEEE-format LaTeX report source
-├── output/               # Final PDF report, slides, HTML notebook copies
+├── output/               # Final PDF report and HTML notebook copies
+├── Phase1_Presentation_Final.pptx  # Final presentation supplied by Mayank
 ├── docs/                 # Literature review, viva guide, checklist, team record
 ├── data/                 # Dataset notes (CSV downloads automatically)
 ├── index.html            # Read the notebooks in a browser
@@ -357,22 +358,35 @@ The dataset downloads itself the first time notebook 02 runs. With seed `42` you
 | | |
 |---|---|
 | Report (IEEE format) | [PDF](output/Phase1_Report.pdf) · [LaTeX source](report/Phase1_Report.tex) |
-| Presentation | [PPTX](output/Phase1_Presentation_Complete.pptx) · [PDF](output/Phase1_Presentation_Complete.pdf) |
+| Final presentation | [Phase1_Presentation_Final.pptx](Phase1_Presentation_Final.pptx) |
 | Literature review | [docs/LITERATURE_REVIEW.md](docs/LITERATURE_REVIEW.md) |
 | Viva and demo prep | [Demo guide](docs/DEMO_AND_VIVA.md) · [Study guide](STUDY_GUIDE.md) |
 | Phase 1 checklist | [docs/PHASE1_CHECKLIST.md](docs/PHASE1_CHECKLIST.md) |
 
+## Phase 1 submission
+
+- **Presentation upload:** `Phase1_Presentation_Final.pptx` (Mayank's final deck, kept unchanged).
+- **Report upload:** `output/Phase1_Report.pdf`, compiled from `report/Phase1_Report.tex` using IEEEtran.
+- **Code link:** https://github.com/mitul-bhatia/t011-card-fraud-phase1
+- **Form values:** Team **T011**, Project **26**, Section **A**. Leave the self-project name blank: this is an allocated project.
+
+Only one team member should submit, using their university account, at least one hour before the team's evaluation slot. Each upload must be below 10 MB. The form allows one submission, so review both files and confirm that faculty can open the repository before submitting. The evaluation slot is not recorded here. [Submission details](docs/SUBMISSION.md).
+
 ## Team T011
 
-| Enrollment No. | Name |
-|---|---|
-| 2401010174 | H Maheshwari |
-| 2401010486 | Vaibhav |
-| 2401010267 | Mayank |
-| 2401010222 | Keshav |
-| 2401010279 | Mitul Bhatia |
+All five members are involved and jointly wrote the report. H Maheshwari is called Hardik in the team.
 
-Who did what: [docs/TEAM_CONTRIBUTIONS.md](docs/TEAM_CONTRIBUTIONS.md)
+| Enrollment No. | Member | Main responsibility | Shared deliverable |
+|---|---|---|---|
+| 2401010174 | H Maheshwari (Hardik) | Notebook 05: evaluation and thresholds | Joint report contribution |
+| 2401010486 | Vaibhav | Notebook 03: feature engineering | Joint report contribution |
+| 2401010267 | Mayank | Notebook 04: GMM training | Joint report; README and presentation with Keshav |
+| 2401010222 | Keshav | Notebook 02: data quality and EDA | Joint report; README and presentation with Mayank |
+| 2401010279 | Mitul Bhatia | Overall project lead, management and coordination | Joint report; overall project oversight |
+
+Notebook 01 is the shared project and literature background. Each member should understand the full pipeline for the individual viva. Notebook 05 evaluates PR AUC, precision and recall; accuracy is not our headline measure.
+
+[Contribution details and existing commit evidence](docs/TEAM_CONTRIBUTIONS.md).
 
 ## References
 

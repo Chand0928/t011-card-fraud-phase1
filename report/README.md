@@ -11,6 +11,8 @@ pdflatex -output-directory=../output Phase1_Report.tex
 pdflatex -output-directory=../output Phase1_Report.tex
 ```
 
-The second run resolves citations and figure references. Keep the adjacent `figures` folder when compiling. All numbers and charts come from the five notebooks. `../FILE_MAP.md` identifies each producing notebook. If you change the experiment, update the report and slides to match the new run.
+The second run resolves citations and figure references. Keep the project-root `figures/` folder next to `report/` when compiling. All numbers and charts come from the five notebooks. `../FILE_MAP.md` identifies each producing notebook. If you change the experiment, update the report and slides to match the new run.
 
-For Overleaf, upload `../output/LaTeX_Report_Source.zip`, set `main.tex` as the main document, and compile with pdfLaTeX. This ZIP includes the class and the report figures.
+The local `output/T011_Report_LaTeX.zip` convenience bundle contains `main.tex`, the IEEE class and the four report figures for Overleaf. ZIP bundles are excluded from Git; the editable source files remain here. If using the repository directly, upload `Phase1_Report.tex`, `IEEEtran.cls` and the four referenced figures to Overleaf, change the graphic path to `./figures/`, and set the report as the main document.
+
+The report is jointly written by all five members. Its contribution section records the notebook leads and Mitul's overall project leadership. For the form, upload only `output/Phase1_Report.pdf`; keep the `.tex` source in the repository.

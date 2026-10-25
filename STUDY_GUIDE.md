@@ -159,4 +159,4 @@ PR AUC summarizes the precision-recall curve using trapezoidal area. Ours is **0
 12. **What is one important limit?** Only 74 test frauds, a short old dataset, hidden feature meanings, or a simplified density model. Explain how the chosen limit affects the conclusion.
 13. **Where is the autoencoder?** Phase 2. Phase 1 evaluates machine learning only.
 
-Each student should be able to explain the entire notebook. Record actual contributions after studying and reviewing it; the allocation email does not prove contributions.
+Each student should be able to explain the entire notebook. The final responsibility record is in `docs/TEAM_CONTRIBUTIONS.md`; use it to organize preparation, and make sure every member can explain the whole project.

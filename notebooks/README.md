@@ -17,3 +17,14 @@ Read 01. Open 02 in VS Code/Jupyter, select your project Python environment, res
 The supplied HTML files in `output/notebooks/` are reading copies of the verified run. Read `../FILE_MAP.md` for each exact filename and `../docs/CODE_GUIDE.md` for function meanings.
 
 All test-based plots and reference comparisons happen after K and validation thresholds are fixed. Reproducing this run is not permission to repeatedly tune against its test outcomes. A changed experiment needs appropriate fresh evaluation data.
+
+## Team responsibilities
+
+- **Notebook 01:** shared project and literature background.
+- **Notebook 02:** Keshav, data quality and EDA.
+- **Notebook 03:** Vaibhav, feature engineering.
+- **Notebook 04:** Mayank, GMM training.
+- **Notebook 05:** H Maheshwari (Hardik), evaluation and thresholds.
+- **Overall lead:** Mitul Bhatia, management and coordination across the project.
+
+README and presentation: Keshav and Mayank. Report: all five members jointly. All five members are involved; see [the contribution record](../docs/TEAM_CONTRIBUTIONS.md).

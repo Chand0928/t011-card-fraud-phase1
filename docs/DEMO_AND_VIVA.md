@@ -9,7 +9,7 @@
 5. Open notebook 05. Show that validation sets cutoffs before test scoring. Recompute precision and recall from the confusion counts.
 6. Compare the two PR curves. Show the policy and capacity tables. End with a limitation and the Phase 2 boundary.
 
-Read 01, then open 02, 03, 04 and 05 in order in VS Code/Jupyter. Restart each notebook kernel and choose **Run All**. The notebook cells save their own outputs. Use `FILE_MAP.md` to trace each result. Large local inputs and binary models stay outside Git. For presentation without running Python, use `output/Study_Notebook.html` as the study index.
+Read 01, then open 02, 03, 04 and 05 in order in VS Code/Jupyter. Restart each notebook kernel and choose **Run All**. The notebook cells save their own outputs. Use `FILE_MAP.md` to trace each result. Large local inputs and binary models stay outside Git. For presentation without running Python, use `index.html` as the study index.
 
 ## Two-minute explanation
 
@@ -26,6 +26,6 @@ Read 01, then open 02, 03, 04 and 05 in order in VS Code/Jupyter. Restart each n
 - Distinguish PR AUC, precision@100 and precision at a fixed threshold.
 - Explain what the reference comparison can and cannot prove.
 - State at least two limitations and their effect on the conclusion.
-- Update the actual contribution record and confirm faculty repository access.
+- Check the final contribution record and confirm faculty repository access.
 
 Use the root `STUDY_GUIDE.md` for definitions and short answers. Practicing these points is necessary; generated materials cannot guarantee a viva outcome.

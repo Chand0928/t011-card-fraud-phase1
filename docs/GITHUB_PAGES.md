@@ -16,22 +16,20 @@ For this repository, the expected URL is:
 
 This is the expected address after publishing, not a claim that the site is already live.
 
-The current project repository is private. GitHub Free supports Pages from public repositories; private repositories require a supported paid plan. This change does not alter repository visibility or enable Pages. You can instead use a separate public repository containing only the prepared website files.
+The project repository is public as checked on 25 October 2026. This update does not change visibility or enable Pages. You can publish the existing public repository using the steps above, or use a separate repository containing only the website files.
 
 Official reference: [GitHub Pages publishing-source instructions](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
 
 ## Use a separate repository for the reading website
 
-Extract the local `output/GitHub_Pages_Site.zip` and upload its **contents** to the new repository root. The ZIP contains:
+Extract the local `output/T011_Notebook_Site.zip` and upload its **contents** to the new repository root. The ZIP contains:
 
 ```text
 index.html
 .nojekyll
+Phase1_Presentation_Final.pptx
 output/
-  Study_Notebook.html
   Phase1_Report.pdf
-  Phase1_Presentation_Complete.pdf
-  Phase1_Presentation_Complete.pptx
   notebooks/
     01_Project_and_Literature.html
     02_Data_Quality_and_EDA.html
